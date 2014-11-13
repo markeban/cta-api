@@ -1,0 +1,1 @@
+json.array! @trains, partial: 'train', as: :train

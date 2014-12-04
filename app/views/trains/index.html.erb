@@ -1,15 +1,39 @@
 <h1>Current Status of CTA Trains</h1>
 
-<table>
-  <th>Train Line</th>
-  <th>Status</th>
 
-  <% @trains.each do |train| %>
-    <tr>
-      <td> <%= train.name %></td>
-      <td class="<%= train.label %>"><%= train.status %></td>
-    </tr>
-  <% end %>
+<div ng-app="app">
+
+  <div ng-controller="ctaCtrl">
+    <label>Search by Specific Train Line:</label>
+    <input list="trains" ng-model="nameFilter">
+    <button ng-click="statusOrder('status')">Sort By Status</button>
 
 
-</table>
+    <datalist id="trains">
+      <option ng-repeat="train in trains" value="{{ train.name }}"> {{ train.name }} </option>
+    </datalist>
+
+    <table>
+      <th>Train Line</th>
+      <th>Status</th>
+      <tr ng-repeat="train in trains | filter: { name: nameFilter } | orderBy:orderAttribute:sortDirection" >
+        <td> {{ train.name}}  </td>
+        <td class="{{ train.label }}"> {{train.status}} </td>
+      </tr>
+    </table>
+    <p>Add new train line w/ status & label</p>
+    <label>Train Line:</label>
+    <input ng-model="trainLine">
+    <label>Train Status:</label>
+    <input ng-model="trainStatus">
+    <label>Train Label:</label>
+    <input ng-model="trainLabel">
+    <br>
+    <button ng-click="addTrain(trainLine, trainStatus, trainLabel)">Add Train</button>
+
+  </div>
+
+</div>
+
+
+
